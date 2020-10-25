@@ -1,30 +1,20 @@
-import React, { useEffect, useMemo, useReducer, useRef, useState } from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useReducer, useState } from 'react';
 import './App.css';
-
 import useWebSocket, {ReadyState} from 'react-use-websocket';
 import dayjs, { ConfigType } from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
+import {ImArrowUp2, ImArrowDown2} from 'react-icons/im';
 
 dayjs.extend(relativeTime)
 
-function getLastUpdateTime(timestamp: ConfigType): string {
-  let currentTime = dayjs();
-  
-
-  return currentTime.from(timestamp);
-
-}
-
 enum PriceChange {
-  Increase='Green',
-  Decrease='Red',
-  NoChange='White'
+  Increase='price-increase',
+  Decrease='price-decrease',
+  NoChange='price-default'
 
 
 }
-
 interface TickerData {
   price: number;
   lastUpdateTime: ConfigType;
@@ -36,7 +26,6 @@ interface TickerData {
 
 type StockData = Map<string, TickerData>
 
-
 function formatMessageData(message: MessageEvent){
   
   let formattedData = JSON.parse(message.data).reduce((formattedData: StockData, dataPt: [string, number] ) => {
@@ -44,10 +33,8 @@ function formatMessageData(message: MessageEvent){
     let tickerData: TickerData = {
       price: Math.round(price * 100) / 100,
       lastUpdateTime: dayjs()
-      
     }
     formattedData.set(ticker, tickerData);
-    
     return formattedData
   }, new Map<string, TickerData>())
   return formattedData;
@@ -69,7 +56,6 @@ function updateStockData(updatedStockData: StockData | null, currentStockData: S
           newValue.prevPrice = currentData.price;
           newValue = {...value, ...newValue}
           newValue.lastUpdateTime = dayjs()
-          
           if(priceChange > 0){
             newValue.priceChange = PriceChange.Increase
           }else if(priceChange < 0){
@@ -102,17 +88,12 @@ function reducer(state: StockData | null, action: any ){
   }
 }
 
-
-
-
 function App() {
   const webSocketUrl = "ws://stocks.mnet.website";
   const [messageHistory, dispatch] = useReducer(reducer, null)
   const [tickCounter, setTicker] = useState<number>(0)
-
   const {lastMessage} = useWebSocket(webSocketUrl)
 
-  
   useEffect(() => {
     if(lastMessage){
       let action = {
@@ -120,16 +101,13 @@ function App() {
         data: lastMessage
       }
       setTicker(tickCounter + 1)
-      
       dispatch(action);
     }    
   }, [lastMessage])
 
   let stockData: any[] = [];
   
-
   messageHistory?.forEach((value: TickerData, key: string) => {
- 
     let id = key.split("").reduce((id , char) => id + char.charCodeAt(0), 0)
     let ticker = {
       ticker: key,
@@ -150,8 +128,8 @@ function App() {
           <tr>
             <th>Ticker</th>
             <th>Price</th>
-            <th>Prev Price</th>
             <th>Change</th>
+            
             <th>Last Update</th>
           </tr>
         </thead>
@@ -159,18 +137,14 @@ function App() {
           {stockData.map(({ ticker, value }) => (
             <tr
               key={ticker}
-              
             >
               <td>{ticker}</td>
-              <td style={{
-                background: value.priceChange ? value.priceChange : "White",
-              }}>{value.price}</td>
-              {<td style={{
-                background: value.priceChange ? value.priceChange : "White",
-              }}>
+              <td className={value.priceChange}>{value.price}</td>
+              {<td className={value.priceChange}>
                 {`${value.priceChangePercent || 0}%`}
+                {value.priceChange === PriceChange.Increase ? <ImArrowUp2 /> : <ImArrowDown2 />}
               </td>}
-              <td>{value.prevPrice}</td>
+              
               {<td>{value.lastUpdateTime ? value.lastUpdateTime.from(currentTime) : '-'}</td>}
             </tr>
           ))}
