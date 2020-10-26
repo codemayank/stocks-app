@@ -43,7 +43,7 @@ function updateStockData(updatedStockData: StockData | null, currentStockData: S
           }else{
             newValue.priceChange = PriceChange.NoChange
           }
-          if(priceChange != 0){
+          if(priceChange !== 0){
             currentStockData.set(key, newValue);
           }
         }else{

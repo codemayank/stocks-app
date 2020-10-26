@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import './App.css';
 import useWebSocket from 'react-use-websocket';
-import {ChakraProvider, Flex, Box, CSSReset, Heading, Spacer, SimpleGrid, Skeleton} from '@chakra-ui/core';
+import {ChakraProvider, Flex, Box, CSSReset, Heading, Spacer, SimpleGrid} from '@chakra-ui/core';
 import { ColorModeSwitch } from './Components/ColorModeSwitch';
 
 import CustomTheme from './theme'
@@ -26,7 +26,7 @@ function App() {
     }    
   }, [lastMessage])
 
-  let stockData: any[] = [];
+  let stockData: Array<StockDataDisplay | null> = [];
   
   messageHistory?.forEach((value: TickerData, key: string) => {
     let id = key.split("").reduce((id , char) => id + char.charCodeAt(0), 0)
@@ -38,7 +38,7 @@ function App() {
     stockData.push(ticker);
   })
 
-  stockData.sort((a, b) => a.id - b.id);
+  stockData.sort((a, b) => a && b ? a.id - b.id : 0);
 
   
   return (
@@ -66,14 +66,14 @@ function App() {
         </Flex>
 
         <SimpleGrid columns={[3, 5]} spacing={1}>
-          {stockData.map(({ ticker, value }) => (
+          {stockData.map(stock => stock ? (
             <StockStat
-              name={ticker}
-              price={value.price}
-              priceChange={value.priceChange}
-              priceChangePercent={value.priceChangePercent}
+              name={stock.ticker}
+              price={stock.value.price}
+              priceChange={stock.value.priceChange}
+              priceChangePercent={stock.value.priceChangePercent}
             />
-          ))}
+          ) : null)}
         </SimpleGrid>
       </Flex>
     </ChakraProvider>

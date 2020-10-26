@@ -5,9 +5,9 @@ type statArrowProp = "increase" | "decrease" | undefined
 
 interface props {
   name: string;
-  price: string;
+  price: number;
   priceChange: statArrowProp;
-  priceChangePercent: string ;
+  priceChangePercent?: number ;
 
 }
 
@@ -22,7 +22,7 @@ const StockStat: FC<props> = ({name, price, priceChange, priceChangePercent}) =>
       padding="1em"
       borderRadius={["0.5em", "1em"]}
       boxShadow="xl"
-      bg={bg}
+      bg={priceChange ? bg : ''}
     >
       <StatLabel>{name}</StatLabel>
       <StatNumber fontSize={["md", "2xl"]}>{price}</StatNumber>

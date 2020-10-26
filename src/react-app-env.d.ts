@@ -1,6 +1,5 @@
 /// <reference types="react-scripts" />
 
-
 interface TickerData {
   price: number;
   lastUpdateTime: ConfigType;
@@ -10,4 +9,11 @@ interface TickerData {
   
 }
 
-type StockData = Map<string, TickerData>
+type StockData = Map<string, TickerData>;
+
+interface StockDataDisplay {
+  ticker: string;
+  value: TickerData;
+  id: number
+
+}
