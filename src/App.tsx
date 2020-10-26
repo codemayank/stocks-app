@@ -14,18 +14,7 @@ function App() {
   const [messageHistory, dispatch] = useReducer(stockDataReducer, null)
   const [tickCounter, setTicker] = useState<number>(0)
   const {lastMessage, readyState} = useWebSocket(webSocketUrl)
-  const connectionStatus = {
-    [ReadyState.CONNECTING]: 'Connecting',
-    [ReadyState.OPEN]: 'Open',
-    [ReadyState.CLOSING]: 'Closing',
-    [ReadyState.CLOSED]: 'Closed',
-    [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
-  }[readyState];
-
-  console.log(connectionStatus);
-
-
-  console.log('logging ready state', readyState);
+  
   useEffect(() => {
     if(lastMessage){
       let updateMessageHistory = {
