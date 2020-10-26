@@ -1,0 +1,1 @@
+export const webSocketUrl = "ws://stocks.mnet.website";

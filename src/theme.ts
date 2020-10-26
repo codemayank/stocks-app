@@ -1,9 +1,6 @@
 import {theme} from '@chakra-ui/core';
 import {mode} from '@chakra-ui/theme-tools';
 
-
-
-
 const CustomTheme = {
   ...theme,
   colors: {
