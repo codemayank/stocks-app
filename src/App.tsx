@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import './App.css';
-import useWebSocket from 'react-use-websocket';
+import useWebSocket, { ReadyState } from 'react-use-websocket';
 import {ChakraProvider, Flex, Box, CSSReset, Heading, Spacer, SimpleGrid} from '@chakra-ui/core';
 import { ColorModeSwitch } from './Components/ColorModeSwitch';
 
@@ -13,8 +13,19 @@ function App() {
   
   const [messageHistory, dispatch] = useReducer(stockDataReducer, null)
   const [tickCounter, setTicker] = useState<number>(0)
-  const {lastMessage} = useWebSocket(webSocketUrl)
+  const {lastMessage, readyState} = useWebSocket(webSocketUrl)
+  const connectionStatus = {
+    [ReadyState.CONNECTING]: 'Connecting',
+    [ReadyState.OPEN]: 'Open',
+    [ReadyState.CLOSING]: 'Closing',
+    [ReadyState.CLOSED]: 'Closed',
+    [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
+  }[readyState];
 
+  console.log(connectionStatus);
+
+
+  console.log('logging ready state', readyState);
   useEffect(() => {
     if(lastMessage){
       let updateMessageHistory = {
