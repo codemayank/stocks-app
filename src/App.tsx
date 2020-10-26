@@ -4,16 +4,20 @@ import useWebSocket, {ReadyState} from 'react-use-websocket';
 import dayjs, { ConfigType } from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
-import {ImArrowUp2, ImArrowDown2} from 'react-icons/im';
+
+import {ChakraProvider, Flex, Grid, Box, CSSReset, Container, Heading, Stat, StatLabel, StatNumber, StatHelpText, StatArrow, Spacer, SimpleGrid, Skeleton} from '@chakra-ui/core';
+import { ColorModeSwitch } from './Components/ColorModeSwitch';
+
+import DataBox from './Components/DataBox';
+import CustomTheme from './theme'
+
 
 dayjs.extend(relativeTime)
 
 enum PriceChange {
-  Increase='price-increase',
-  Decrease='price-decrease',
-  NoChange='price-default'
-
-
+  Increase='increase',
+  Decrease='decrease',
+  NoChange='priceDefault'
 }
 interface TickerData {
   price: number;
@@ -88,6 +92,8 @@ function reducer(state: StockData | null, action: any ){
   }
 }
 
+
+
 function App() {
   const webSocketUrl = "ws://stocks.mnet.website";
   const [messageHistory, dispatch] = useReducer(reducer, null)
@@ -112,45 +118,58 @@ function App() {
     let ticker = {
       ticker: key,
       value: value,
-      id
-      
+      id  
     }
     stockData.push(ticker);
   })
 
   stockData.sort((a, b) => a.id - b.id);
 
-  let currentTime = dayjs()
+  
   return (
-    <div className="App">
-      <table>
-        <thead>
-          <tr>
-            <th>Ticker</th>
-            <th>Price</th>
-            <th>Change</th>
-            
-            <th>Last Update</th>
-          </tr>
-        </thead>
-        <tbody>
-          {stockData.map(({ ticker, value }) => (
-            <tr
-              key={ticker}
-            >
-              <td>{ticker}</td>
-              <td className={value.priceChange}>{value.price}</td>
-              {<td className={value.priceChange}>
-                {`${value.priceChangePercent || 0}%`}
-                {value.priceChange === PriceChange.Increase ? <ImArrowUp2 /> : <ImArrowDown2 />}
-              </td>}
-              
-              {<td>{value.lastUpdateTime ? value.lastUpdateTime.from(currentTime) : '-'}</td>}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <ChakraProvider theme={CustomTheme}>
+      <CSSReset />
+
+      <Flex
+        alignItems="center"
+        direction={["column", "row"]}
+        justifyContent="space-around"
+        minHeight="100vh"
+      >
+        <Flex direction={["row", "column"]} width={["100%", "40%"]} alignItems="center" justifyContent="space-around">
+          <Box p="2">
+            <Heading>Stock App</Heading>
+          </Box>
+          <Spacer />
+          <Box p="2">
+            <ColorModeSwitch />
+          </Box>
+        </Flex>
+
+        
+          <SimpleGrid columns={[3, 4]} spacing={1}>
+            {stockData.map(({ ticker, value }) => (
+              <>
+                <Stat
+                  minWidth="2rem"
+                  margin="1em"
+                  padding="1em"
+                  borderRadius="1em"
+                  boxShadow="xl"
+                >
+                  <StatLabel>{ticker}</StatLabel>
+                  <StatNumber>{value.price}</StatNumber>
+                  <StatHelpText>
+                    <StatArrow type={value.priceChange} />
+                    {`${value.priceChangePercent || 0}%`}
+                  </StatHelpText>
+                </Stat>
+              </>
+            ))}
+          </SimpleGrid>
+        
+      </Flex>
+    </ChakraProvider>
   );
 }
 
