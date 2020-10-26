@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/stocks-app/static/css/main.fa10c993.chunk.css",
-    "main.js": "/stocks-app/static/js/main.3b6cb775.chunk.js",
-    "main.js.map": "/stocks-app/static/js/main.3b6cb775.chunk.js.map",
+    "main.js": "/stocks-app/static/js/main.1ddddd74.chunk.js",
+    "main.js.map": "/stocks-app/static/js/main.1ddddd74.chunk.js.map",
     "runtime-main.js": "/stocks-app/static/js/runtime-main.a3406cfb.js",
     "runtime-main.js.map": "/stocks-app/static/js/runtime-main.a3406cfb.js.map",
-    "static/js/2.fcaaa3e8.chunk.js": "/stocks-app/static/js/2.fcaaa3e8.chunk.js",
-    "static/js/2.fcaaa3e8.chunk.js.map": "/stocks-app/static/js/2.fcaaa3e8.chunk.js.map",
+    "static/js/2.76755b85.chunk.js": "/stocks-app/static/js/2.76755b85.chunk.js",
+    "static/js/2.76755b85.chunk.js.map": "/stocks-app/static/js/2.76755b85.chunk.js.map",
     "static/js/3.5bcd1d35.chunk.js": "/stocks-app/static/js/3.5bcd1d35.chunk.js",
     "static/js/3.5bcd1d35.chunk.js.map": "/stocks-app/static/js/3.5bcd1d35.chunk.js.map",
     "index.html": "/stocks-app/index.html",
     "static/css/main.fa10c993.chunk.css.map": "/stocks-app/static/css/main.fa10c993.chunk.css.map",
-    "static/js/2.fcaaa3e8.chunk.js.LICENSE.txt": "/stocks-app/static/js/2.fcaaa3e8.chunk.js.LICENSE.txt"
+    "static/js/2.76755b85.chunk.js.LICENSE.txt": "/stocks-app/static/js/2.76755b85.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.a3406cfb.js",
-    "static/js/2.fcaaa3e8.chunk.js",
+    "static/js/2.76755b85.chunk.js",
     "static/css/main.fa10c993.chunk.css",
-    "static/js/main.3b6cb775.chunk.js"
+    "static/js/main.1ddddd74.chunk.js"
   ]
 }
