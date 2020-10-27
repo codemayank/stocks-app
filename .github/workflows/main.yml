@@ -28,5 +28,5 @@ jobs:
       - name: Build and Deploy
         run: |
           npm install,
-          yarn run deploy.
+          npm run deploy.
   
