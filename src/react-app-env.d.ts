@@ -17,3 +17,5 @@ interface StockDataDisplay {
   id: number
 
 }
+
+type statArrowProp = "increase" | "decrease" | undefined
