@@ -1,8 +1,6 @@
 import React, { FC } from 'react';
 import { Stat, StatArrow, StatHelpText, StatLabel, StatNumber, useColorModeValue } from '@chakra-ui/core';
 
-type statArrowProp = "increase" | "decrease" | undefined
-
 interface props {
   name: string;
   price: number;
@@ -23,10 +21,11 @@ const StockStat: FC<props> = ({name, price, priceChange, priceChangePercent}) =>
       borderRadius={["0.5em", "1em"]}
       boxShadow="xl"
       bg={priceChange ? bg : ''}
+      data-testid="stat"
     >
-      <StatLabel>{name}</StatLabel>
-      <StatNumber fontSize={["md", "2xl"]}>{price}</StatNumber>
-      <StatHelpText fontSize={['xs', 'md']}>
+      <StatLabel data-testid="label">{name}</StatLabel>
+      <StatNumber fontSize={["md", "2xl"]} data-testid="price">{price}</StatNumber>
+      <StatHelpText fontSize={['xs', 'md']} data-testid="help_text">
         <StatArrow boxSize={['2', '3']} type={priceChange} />
         {`${priceChangePercent || 0}%`}
       </StatHelpText>
