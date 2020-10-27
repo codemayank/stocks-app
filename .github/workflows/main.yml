@@ -27,6 +27,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build and Deploy
         run: |
-          npm install,
+          yarn,
           yarn deploy.
   
