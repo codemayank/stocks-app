@@ -2,10 +2,10 @@ import React, { useEffect, useReducer, useState } from 'react';
 import './App.css';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import {ChakraProvider, Flex, Box, CSSReset, Heading, Spacer, SimpleGrid} from '@chakra-ui/core';
-import { ColorModeSwitch } from './Components/ColorModeSwitch';
+import { ColorModeSwitch } from './Components/ColorModSwitch/ColorModeSwitch';
 
 import CustomTheme from './theme'
-import StockStat from './Components/StockStat';
+import StockStat from './Components/StockStat/StockStat';
 import stockDataReducer from './reducers/stockDataReducer';
 import { webSocketUrl } from './config/constants';
 
